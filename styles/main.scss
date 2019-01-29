@@ -1,0 +1,8 @@
+@import 'styles/fonts';
+@import 'styles/crtAnimations.scss';
+
+@include glitch('glitch', 0.8s);
+
+body {
+    font-family: 'Exo 2', 'Courier', sans-serif;
+}
