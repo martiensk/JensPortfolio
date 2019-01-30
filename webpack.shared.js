@@ -5,16 +5,9 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-const criticalCSS = new ExtractTextPlugin({
-    filename: 'css/critical.css',
-    allChunks: true
-});
-const mainCSS = new ExtractTextPlugin({
-    filename: 'css/[contenthash].css',
-    allChunks: true
-});
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 /**
  * @param {string} env The node environment as a string.
@@ -25,15 +18,25 @@ module.exports = (env, ssr = false) => {
     return {
         entry: ['core-js/fn/promise', './scripts/entry.client.js'],
         output: {
-            filename: env === 'development' ? 'js/[name].js' : 'js/[chunkhash].js',
-            path: env === 'development' ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'dist')
+            filename:
+                env === 'development' ? 'js/[name].js' : 'js/[chunkhash].js',
+            path:
+                env === 'development'
+                    ? path.resolve(__dirname, 'build')
+                    : path.resolve(__dirname, 'dist')
         },
-        module: {rules: getRules(env)},
+        module: { rules: getRules(env) },
         resolve: {
             extensions: ['.js', '.vue', '.scss'],
             alias: {
-                TextPlugin: path.resolve(__dirname, './scripts/vendor/TextPlugin.min.js'),
-                MorphSVG: path.resolve(__dirname, './scripts/vendor/MorphSVGPlugin.min.js')
+                TextPlugin: path.resolve(
+                    __dirname,
+                    './scripts/vendor/TextPlugin.min.js'
+                ),
+                MorphSVG: path.resolve(
+                    __dirname,
+                    './scripts/vendor/MorphSVGPlugin.min.js'
+                )
             }
         },
         plugins: getPlugins(env, ssr)
@@ -60,52 +63,64 @@ const getRules = (env) => {
             test: /\.vue$/,
             loader: 'vue-loader',
             options: {
-                loaders: {js: 'babel-loader'},
-                cssModules: {minimize: env !== 'development'}
+                loaders: { js: 'babel-loader' },
+                cssModules: { minimize: env !== 'development' }
             }
         },
         {
             test: /\.js$/,
             exclude: /node_modules/,
-            use: {loader: 'babel-loader'}
+            use: { loader: 'babel-loader' }
         },
         {
             test: /\.scss$/,
             loader: 'sass-loader',
-            options: {sourceMap: env === 'development'}
+            options: { sourceMap: env === 'development' }
         },
         {
             test: /\.(png|svg|jpg|gif)$/,
-            use: [{
-                loader: 'file-loader',
-                options: {
-                    name: env === 'development' ? '[name].[ext]' : '[hash].[ext]',
-                    outputPath: 'images/',
-                    publicPath: '/'
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name:
+                            env === 'development'
+                                ? '[name].[ext]'
+                                : '[hash].[ext]',
+                        outputPath: 'images/',
+                        publicPath: '/'
+                    }
                 }
-            }]
+            ]
         },
         {
             test: /\.(woff|woff2|eot|ttf|otf)$/,
-            use: [{
-                loader: 'file-loader',
-                options: {
-                    name: env === 'development' ? '[name].[ext]' : '[hash].[ext]',
-                    outputPath: 'fonts/',
-                    publicPath: '/'
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name:
+                            env === 'development'
+                                ? '[name].[ext]'
+                                : '[hash].[ext]',
+                        outputPath: 'fonts/',
+                        publicPath: '/'
+                    }
                 }
-            }]
+            ]
         },
         {
             test: /\.(mp3|ogg)$/,
-            use: [{
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]',
-                    outputPath: 'audio/',
-                    publicPath: '/'
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'audio/',
+                        publicPath: '/'
+                    }
                 }
-            }]
+            ]
         }
     ];
 
@@ -114,15 +129,15 @@ const getRules = (env) => {
             enforce: 'post',
             test: /\.scss$/,
             use: [
-                {loader: 'style-loader'},
-                {
+                { loader: 'vue-style-loader' },
+                /*{
                     loader: 'css-loader',
-                    options: {sourceMap: true}
+                    options: { sourceMap: true }
                 },
                 {
                     loader: 'postcss-loader',
-                    options: {sourceMap: true}
-                }
+                    options: { sourceMap: true }
+                }*/
             ]
         }
     ];
@@ -130,11 +145,11 @@ const getRules = (env) => {
     const prodRules = [
         {
             enforce: 'post',
-            test: /critical.scss/,
+            test: /\.scss/,
             use: [
                 {
                     loader: ExtractTextPlugin.loader,
-                    options: {publicPath: '/'}
+                    options: { publicPath: '/' }
                 },
                 {
                     loader: 'css-loader',
@@ -143,30 +158,14 @@ const getRules = (env) => {
                         importLoaders: 1
                     }
                 },
-                {loader: 'postcss-loader'}
-            ]
-        },
-        {
-            enforce: 'post',
-            test: /main.scss/,
-            use: [
-                {
-                    loader: ExtractTextPlugin.loader,
-                    options: {publicPath: '/'}
-                },
-                {
-                    loader: 'css-loader',
-                    options: {
-                        minimize: true,
-                        importLoaders: 1
-                    }
-                },
-                {loader: 'postcss-loader'}
+                { loader: 'postcss-loader' }
             ]
         }
     ];
 
-    return env === 'development' ? rules.concat(devRules) : rules.concat(prodRules);
+    return env === 'development'
+        ? rules.concat(devRules)
+        : rules.concat(prodRules);
 };
 
 /**
@@ -176,19 +175,24 @@ const getRules = (env) => {
  */
 const getPlugins = (env, ssr) => {
     const pluginPack = [
-        new webpack.LoaderOptionsPlugin({options: {}}),
+        new webpack.LoaderOptionsPlugin({
+            options: {}
+        }),
         new StyleLintPlugin({
             fix: env !== 'development',
             configOverrides: {
-                rules: env === 'development' ? {} : {
-                    'order/order': [
-                        'dollar-variables',
-                        'declarations',
-                        'at-rules',
-                        'rules'
-                    ],
-                    'order/properties-alphabetical-order': true
-                }
+                rules:
+                    env === 'development'
+                        ? {}
+                        : {
+                              'order/order': [
+                                  'dollar-variables',
+                                  'declarations',
+                                  'at-rules',
+                                  'rules'
+                              ],
+                              'order/properties-alphabetical-order': true
+                          }
             }
         }),
         new HtmlWebpackPlugin({
@@ -202,15 +206,20 @@ const getPlugins = (env, ssr) => {
                 collapseInlineTagWhitespace: true,
                 collapseWhitespace: true
             }
-        })
+        }),
+        new VueLoaderPlugin()
     ];
 
     if (env === 'development') {
         pluginPack.push(new CleanWebpackPlugin(['build']));
     } else {
         ssr && pluginPack.push(new CleanWebpackPlugin(['dist']));
-        pluginPack.push(criticalCSS);
-        pluginPack.push(mainCSS);
+        pluginPack.push(
+            new ExtractTextPlugin({
+                filename: 'css/[contenthash].css',
+                allChunks: true
+            })
+        );
         !ssr && pluginPack.push(new BundleAnalyzerPlugin());
         ssr && pluginPack.push(new VueSSRServerPlugin());
     }

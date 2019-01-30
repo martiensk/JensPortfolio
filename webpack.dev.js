@@ -6,7 +6,7 @@ const dev = Object.assign(conf('development'), {
     devServer: {
         contentBase: 'build/',
         compress: true,
-        port: 8080,
+        port: 8081,
         index: 'views/index.html',
         overlay: true
     }

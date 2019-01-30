@@ -1,8 +1,14 @@
-@import 'styles/fonts';
-@import 'styles/crtAnimations.scss';
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
 
-@include glitch('glitch', 0.8s);
-
+html,
 body {
-    font-family: 'Exo 2', 'Courier', sans-serif;
+    font-size: 16px;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
 }

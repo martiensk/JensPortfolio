@@ -1,38 +1,25 @@
 {
-    "parser": "babel-eslint",
     "parserOptions": {
+        "parser": "babel-eslint",
         "sourceType": "module"
     },
     "env": {
         "es6": true,
         "browser": true
     },
-    "plugins": [
-        "require-jsdoc-except",
-        "classes",
-        "html"
-    ],
+    "plugins": ["require-jsdoc-except", "classes", "html"],
     "globals": {
         "Vue": true,
         "Vuex": true
     },
     "root": true,
-    "extends": [
-        "eslint:recommended",
-        "standard"
-    ],
+    "extends": ["plugin:vue/recommended", "eslint:recommended", "standard"],
     "rules": {
         "for-direction": "error",
         "getter-return": "error",
         "no-await-in-loop": "error",
-        "no-empty": [
-            "error",
-            { "allowEmptyCatch": true }
-        ],
-        "no-empty-function": [
-            "error",
-            { "allow": ["constructors"] }
-        ],
+        "no-empty": ["error", { "allowEmptyCatch": true }],
+        "no-empty-function": ["error", { "allow": ["constructors"] }],
         "no-prototype-builtins": "error",
         "accessor-pairs": [
             "error",
@@ -60,11 +47,7 @@
         "block-spacing": "error",
         "computed-property-spacing": "error",
         "consistent-this": "error",
-        "func-style": [
-            "error",
-            "expression",
-            { "allowArrowFunctions": true }
-        ],
+        "func-style": ["error", "expression", { "allowArrowFunctions": true }],
         "function-paren-newline": ["error", "never"],
         "implicit-arrow-linebreak": ["error"],
         "indent": ["error", 4],
@@ -108,10 +91,7 @@
         "max-depth": ["error", 8],
         "complexity": ["error", 10],
         "default-case": "warn",
-        "no-console": [
-            "warn",
-            { "allow": ["warn", "error"] }
-        ],
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
         "no-func-assign": "warn",
         "no-inner-declarations": ["warn", "both"],
         "no-debugger": "warn",
@@ -132,7 +112,14 @@
                     "ArrowFunctionExpression": true,
                     "FunctionExpression": true
                 },
-                "ignore": ["data", "mounted", "created", "beforeDestroy", "beforeMount", "onComplete"]
+                "ignore": [
+                    "data",
+                    "mounted",
+                    "created",
+                    "beforeDestroy",
+                    "beforeMount",
+                    "onComplete"
+                ]
             }
         ],
         "valid-jsdoc": [

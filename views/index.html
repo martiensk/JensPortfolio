@@ -12,20 +12,13 @@
     <meta name="theme-color" content="#ffffff">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <% for (var css in htmlWebpackPlugin.files.css) { %>
-        <% if (htmlWebpackPlugin.files.css[css].indexOf('critical.css') != -1) { %>
-            <style>
-                <%= compilation.assets[htmlWebpackPlugin.files.css[css].substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
-            </style>
-        <% } %>
+        <style>
+            <%= compilation.assets[htmlWebpackPlugin.files.css[css].substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
+        </style>
     <% } %>
 </head>
 <body>
     <section id="app"><!--vue-ssr-outlet--></section>
-    <% for (var css in htmlWebpackPlugin.files.css) { %>
-        <% if (htmlWebpackPlugin.files.css[css].indexOf('critical.css') < 0) { %>
-            <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[css] %>">
-        <% } %>
-    <% } %>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
         <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>" async defer></script>
     <% } %>
