@@ -5,9 +5,9 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-    .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 /**
  * @param {string} env The node environment as a string.
@@ -18,25 +18,15 @@ module.exports = (env, ssr = false) => {
     return {
         entry: ['core-js/fn/promise', './scripts/entry.client.js'],
         output: {
-            filename:
-                env === 'development' ? 'js/[name].js' : 'js/[chunkhash].js',
-            path:
-                env === 'development'
-                    ? path.resolve(__dirname, 'build')
-                    : path.resolve(__dirname, 'dist')
+            filename: env === 'development' ? 'js/[name].js' : 'js/[chunkhash].js',
+            path: env === 'development' ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'dist')
         },
         module: { rules: getRules(env) },
         resolve: {
             extensions: ['.js', '.vue', '.scss'],
             alias: {
-                TextPlugin: path.resolve(
-                    __dirname,
-                    './scripts/vendor/TextPlugin.min.js'
-                ),
-                MorphSVG: path.resolve(
-                    __dirname,
-                    './scripts/vendor/MorphSVGPlugin.min.js'
-                )
+                TextPlugin: path.resolve(__dirname, './scripts/vendor/TextPlugin.min.js'),
+                MorphSVG: path.resolve(__dirname, './scripts/vendor/MorphSVGPlugin.min.js')
             }
         },
         plugins: getPlugins(env, ssr)
@@ -73,9 +63,8 @@ const getRules = (env) => {
             use: { loader: 'babel-loader' }
         },
         {
-            test: /\.scss$/,
-            loader: 'sass-loader',
-            options: { sourceMap: env === 'development' }
+            test: /\.styl$/,
+            loader: ['style-loader', 'css-loader', 'stylus-loader']
         },
         {
             test: /\.(png|svg|jpg|gif)$/,
@@ -83,10 +72,7 @@ const getRules = (env) => {
                 {
                     loader: 'file-loader',
                     options: {
-                        name:
-                            env === 'development'
-                                ? '[name].[ext]'
-                                : '[hash].[ext]',
+                        name: env === 'development' ? '[name].[ext]' : '[hash].[ext]',
                         outputPath: 'images/',
                         publicPath: '/'
                     }
@@ -99,10 +85,7 @@ const getRules = (env) => {
                 {
                     loader: 'file-loader',
                     options: {
-                        name:
-                            env === 'development'
-                                ? '[name].[ext]'
-                                : '[hash].[ext]',
+                        name: env === 'development' ? '[name].[ext]' : '[hash].[ext]',
                         outputPath: 'fonts/',
                         publicPath: '/'
                     }
@@ -126,27 +109,30 @@ const getRules = (env) => {
 
     const devRules = [
         {
-            enforce: 'post',
             test: /\.scss$/,
             use: [
-                { loader: 'vue-style-loader' },
-                /*{
+                'vue-style-loader',
+                {
                     loader: 'css-loader',
                     options: { sourceMap: true }
                 },
                 {
+                    loader: 'sass-loader',
+                    options: { sourceMap: env === 'development' }
+                },
+                {
                     loader: 'postcss-loader',
                     options: { sourceMap: true }
-                }*/
+                }
             ]
         }
     ];
 
     const prodRules = [
         {
-            enforce: 'post',
             test: /\.scss/,
             use: [
+                'vue-style-loader',
                 {
                     loader: ExtractTextPlugin.loader,
                     options: { publicPath: '/' }
@@ -154,18 +140,15 @@ const getRules = (env) => {
                 {
                     loader: 'css-loader',
                     options: {
-                        minimize: true,
                         importLoaders: 1
                     }
                 },
-                { loader: 'postcss-loader' }
+                'postcss-loader'
             ]
         }
     ];
 
-    return env === 'development'
-        ? rules.concat(devRules)
-        : rules.concat(prodRules);
+    return env === 'development' ? rules.concat(devRules) : rules.concat(prodRules);
 };
 
 /**
@@ -185,15 +168,11 @@ const getPlugins = (env, ssr) => {
                     env === 'development'
                         ? {}
                         : {
-                              'order/order': [
-                                  'dollar-variables',
-                                  'declarations',
-                                  'at-rules',
-                                  'rules'
-                              ],
+                              'order/order': ['dollar-variables', 'declarations', 'at-rules', 'rules'],
                               'order/properties-alphabetical-order': true
                           }
-            }
+            },
+            files: ['**/*.{vue,scss}']
         }),
         new HtmlWebpackPlugin({
             title: 'Coming Soon',
@@ -220,6 +199,7 @@ const getPlugins = (env, ssr) => {
                 allChunks: true
             })
         );
+        pluginPack.push(new OptimizeCSSAssetsPlugin({}));
         !ssr && pluginPack.push(new BundleAnalyzerPlugin());
         ssr && pluginPack.push(new VueSSRServerPlugin());
     }

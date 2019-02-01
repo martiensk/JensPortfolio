@@ -112,14 +112,7 @@
                     "ArrowFunctionExpression": true,
                     "FunctionExpression": true
                 },
-                "ignore": [
-                    "data",
-                    "mounted",
-                    "created",
-                    "beforeDestroy",
-                    "beforeMount",
-                    "onComplete"
-                ]
+                "ignore": ["data", "mounted", "created", "beforeDestroy", "beforeMount", "onComplete"]
             }
         ],
         "valid-jsdoc": [
@@ -141,6 +134,14 @@
         "classes/constructor": "error",
         "classes/super": "error",
         "classes/style": "error",
-        "no-new": "off"
+        "no-new": "off",
+        "vue/html-closing-bracket-spacing": [
+            "warn",
+            {
+                "startTag": "never",
+                "endTag": "never",
+                "selfClosingTag": "never"
+            }
+        ]
     }
 }
