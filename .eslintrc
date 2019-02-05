@@ -102,6 +102,7 @@
         "multiline-comment-style": "warn",
         "no-var": "warn",
         "prefer-rest-params": "warn",
+        "space-before-function-paren": ["warn", "never"],
         "require-jsdoc-except/require-jsdoc": [
             "warn",
             {
@@ -142,6 +143,14 @@
                 "endTag": "never",
                 "selfClosingTag": "never"
             }
-        ]
+        ],
+        "vue/html-indent": ["warn", 4],
+        "vue/max-attributes-per-line": ["warn", {
+            "singleline": 5,
+            "multiline": {
+              "max": 5,
+              "allowFirstLine": true
+            }
+          }]
     }
 }

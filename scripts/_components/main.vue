@@ -1,33 +1,39 @@
 <template>
-  <v-app>
-    <v-toolbar app height="120px" flat color="transparent">
-        <v-card elevation="0" flat color="transparent">
-            <v-toolbar-title class="display-1 text-uppercase font-weight-bold">Jennie Kropff</v-toolbar-title>
-            <v-subheader class="body-2 text-uppercase d-block pa-0">Photography</v-subheader>
-        </v-card>
-        <v-spacer/>
-        <v-menu offset-y>
-            <v-btn slot="activator" class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>
-                + Projects
-            </v-btn>
-            <v-list>
-                <v-list-tile v-for="(item, index) in items" :key="index" active-class="highlighted">
-                <v-list-tile-title>{{ item }}</v-list-tile-title>
-                </v-list-tile>
-            </v-list>
-    </v-menu>
-        <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>Link Two</v-btn>
-        <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>Link Three</v-btn>
-    </v-toolbar>
-    <v-content>
-      <v-container fluid>
-        <router-view/>
-      </v-container>
-    </v-content>
-    <v-footer app/>
-  </v-app>
+    <v-app>
+        <v-toolbar app height="120px" flat color="transparent">
+            <v-card elevation="0" flat color="transparent">
+                <v-toolbar-title class="display-1 text-uppercase font-weight-bold">
+                    Jennie Kropff
+                </v-toolbar-title>
+                <v-subheader class="body-2 text-uppercase d-block pa-0">
+                    Photography
+                </v-subheader>
+            </v-card>
+            <v-spacer/>
+            <v-menu offset-y :nudge-bottom="5" :min-width="160" :nudge-left="25" :open-on-hover="true">
+                <v-btn slot="activator" class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>
+                    + Projects
+                </v-btn>
+                <v-list class="pa-0">
+                    <div class="arrow-top"/>
+                    <v-list-tile v-for="(photo, key, index) in photos" :key="index" @click="">
+                        <v-list-tile-title>{{ key }}</v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
+            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>About</v-btn>
+            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>Blog</v-btn>
+        </v-toolbar>
+        <v-content>
+            <v-container fluid>
+                <router-view/>
+            </v-container>
+        </v-content>
+        <v-footer app/>
+    </v-app>
 </template>
 <script>
+/* global photos */
 import { VApp, VToolbar, VToolbarTitle, VContent, VContainer, VFooter, VSubheader, VCard, VSpacer, VBtn, VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib';
 
 export default {
@@ -50,13 +56,40 @@ export default {
     },
     data() {
         return {
-            items: ['Link One', 'Link Two', 'Link Three']
+            photos: []
         };
+    },
+    mounted() {
+        this.photos = photos;
     }
 };
 </script>
 
 <style lang="scss">
+.hover {
+    background-color: #e0e0e0;
+}
+
+.v-menu__content {
+    contain: inherit;
+    overflow: visible;
+
+    .v-list {
+        position: relative;
+    }
+
+    .arrow-top {
+        border-color: transparent transparent #fff;
+        border-style: solid;
+        border-width: 0 10px 10px;
+        height: 0;
+        left: calc(50% - 12px);
+        position: absolute;
+        top: -9px;
+        width: 0;
+    }
+}
+
 .v-toolbar__content {
     padding: 0 50px;
 
