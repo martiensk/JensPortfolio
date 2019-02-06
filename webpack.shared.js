@@ -175,7 +175,7 @@ const getPlugins = (env, ssr) => {
             files: ['**/*.{vue,scss}']
         }),
         new HtmlWebpackPlugin({
-            title: 'Coming Soon',
+            title: 'Jennie Kropff Photgraphy',
             filename: 'views/index.html',
             template: './views/index.html',
             favicon: 'favicon.ico',

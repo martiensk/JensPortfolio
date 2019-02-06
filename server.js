@@ -22,6 +22,7 @@ const renderer = createBundleRenderer(serverBundle, {
 });
 
 app.use(express.static(path.join(__dirname, '/dist')));
+app.use(express.static(path.join(__dirname, '/photos')));
 
 app.use(require('connect-inject')({
     snippet: `<script>const photos = ${JSON.stringify(photos)};</script>`,

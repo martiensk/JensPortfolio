@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-toolbar app height="120px" flat color="transparent">
+        <v-toolbar app height="120px" flat color="transparent" :fixed="true">
             <v-card elevation="0" flat color="transparent">
                 <v-toolbar-title class="display-1 text-uppercase font-weight-bold">
                     Jennie Kropff
@@ -16,17 +16,19 @@
                 </v-btn>
                 <v-list class="pa-0">
                     <div class="arrow-top"/>
-                    <v-list-tile v-for="(photo, key, index) in photos" :key="index" @click="">
-                        <v-list-tile-title>{{ key }}</v-list-tile-title>
+                    <v-list-tile v-for="(photo, key, index) in photos" :key="index" class="text-capitalize" @click="">
+                        <v-list-tile-title>
+                            {{ key }}
+                        </v-list-tile-title>
                     </v-list-tile>
                 </v-list>
             </v-menu>
             <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>About</v-btn>
             <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>Blog</v-btn>
         </v-toolbar>
-        <v-content>
-            <v-container fluid>
-                <router-view/>
+        <v-content class="ma-0">
+            <v-container>
+                <router-view :photos="photos"/>
             </v-container>
         </v-content>
         <v-footer app/>
@@ -68,6 +70,10 @@ export default {
 <style lang="scss">
 .hover {
     background-color: #e0e0e0;
+}
+
+.v-content__wrap {
+    width: 100%;
 }
 
 .v-menu__content {

@@ -1,15 +1,24 @@
 <template>
-  <div>Home</div>
+    <div>
+        <v-parallax class="parallax" v-for="(photo, key, index) in photos" :key="index" :src="`/${key}/cover.jpg`" :height="'100%'">
+            {{key}}
+        </v-parallax>
+    </div>
 </template>
 
 <script>
+import { VParallax } from 'vuetify/lib';
+
 export default {
-    name: 'Home'
+    name: 'Home',
+    components: { VParallax },
+    props: ['photos']
 };
 </script>
 
 <style lang="scss">
-.test {
-    color: #000;
+.parallax {
+    height: 500px; /* stylelint-disable-line */
+    width: 100%;
 }
 </style>
