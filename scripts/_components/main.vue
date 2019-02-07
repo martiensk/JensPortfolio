@@ -1,17 +1,17 @@
 <template>
     <v-app>
         <v-toolbar app height="120px" flat color="transparent" :fixed="true">
-            <v-card elevation="0" flat color="transparent">
+            <v-card elevation="0" flat color="transparent" class="white--text menu-text">
                 <v-toolbar-title class="display-1 text-uppercase font-weight-bold">
                     Jennie Kropff
                 </v-toolbar-title>
-                <v-subheader class="body-2 text-uppercase d-block pa-0">
+                <v-subheader class="body-2 text-uppercase d-block pa-0 white--text menu-text">
                     Photography
                 </v-subheader>
             </v-card>
             <v-spacer/>
             <v-menu offset-y :nudge-bottom="5" :min-width="160" :nudge-left="25" :open-on-hover="true">
-                <v-btn slot="activator" class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>
+                <v-btn slot="activator" class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat dark>
                     + Projects
                 </v-btn>
                 <v-list class="pa-0">
@@ -23,15 +23,17 @@
                     </v-list-tile>
                 </v-list>
             </v-menu>
-            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>About</v-btn>
-            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat>Blog</v-btn>
+            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat dark>About</v-btn>
+            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat dark>Blog</v-btn>
         </v-toolbar>
-        <v-content class="ma-0">
-            <v-container>
+        <v-content class="ma-0 pa-0">
+            <v-container ma-0 pa-0 fluid>
                 <router-view :photos="photos"/>
             </v-container>
         </v-content>
-        <v-footer app/>
+        <v-footer class="justify-center" absolute dark app>
+            © {{ year }} Jennie Kropff Photography. All rights reserved.
+        </v-footer>
     </v-app>
 </template>
 <script>
@@ -58,7 +60,8 @@ export default {
     },
     data() {
         return {
-            photos: []
+            photos: [],
+            year: new Date().getFullYear()
         };
     },
     mounted() {
@@ -68,6 +71,11 @@ export default {
 </script>
 
 <style lang="scss">
+.menu-text {
+    text-shadow: 1px 1px 2px #000;
+    letter-spacing: 4px;
+}
+
 .hover {
     background-color: #e0e0e0;
 }
@@ -98,6 +106,10 @@ export default {
 
 .v-toolbar__content {
     padding: 0 50px;
+
+    .display-1 {
+        letter-spacing: 4px !important; /* stylelint-disable-line */
+    }
 
     .v-subheader {
         height: auto;
