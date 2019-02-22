@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-toolbar app height="120px" flat color="transparent" :fixed="true">
-            <v-card elevation="0" flat color="transparent" class="white--text menu-text">
+            <v-card elevation="0" flat color="transparent" class="white--text menu-text" :to="'/'">
                 <v-toolbar-title class="display-1 text-uppercase font-weight-bold">
                     Jennie Kropff
                 </v-toolbar-title>
@@ -16,7 +16,7 @@
                 </v-btn>
                 <v-list class="pa-0">
                     <div class="arrow-top"/>
-                    <v-list-tile v-for="(photo, key, index) in photos" :key="index" class="text-capitalize" @click="">
+                    <v-list-tile v-for="(photo, key, index) in photos" :key="index" class="text-capitalize" @click="navigate(key)">
                         <v-list-tile-title>
                             {{ key }}
                         </v-list-tile-title>
@@ -28,7 +28,7 @@
         </v-toolbar>
         <v-content class="ma-0 pa-0">
             <v-container ma-0 pa-0 fluid>
-                <router-view :photos="photos"/>
+                <router-view :photos="photos" :photo-set="projectPhotos" @navigate="navigate"/>
             </v-container>
         </v-content>
         <v-footer class="justify-center" absolute dark app>
@@ -60,20 +60,33 @@ export default {
     },
     data() {
         return {
-            photos: [],
+            photos: {},
+            projectPhotos: null,
             year: new Date().getFullYear()
         };
     },
     mounted() {
         this.photos = photos;
+    },
+    methods: {
+
+        /**
+         * Navigates to a project page.
+         * @param {string} key The project to navigate to.
+         * @returns {void}
+         */
+        navigate(key) {
+            this.projectPhotos = photos[key];
+            this.$router.push({name: 'project', params: { key }});
+        }
     }
 };
 </script>
 
 <style lang="scss">
 .menu-text {
-    text-shadow: 1px 1px 2px #000;
     letter-spacing: 4px;
+    text-shadow: 1px 1px 2px #000;
 }
 
 .hover {
@@ -125,5 +138,9 @@ export default {
             background-color: transparent;
         }
     }
+}
+
+.container {
+    min-height: 100%;
 }
 </style>
