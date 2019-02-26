@@ -25,13 +25,19 @@ export default {
             height: 300
         };
     },
+    created() {
+        this.height = window.innerHeight;
+    },
     methods: {
+
+        /**
+         * Emits a 'navigate' event.
+         * @param {string} key The url path to navigate to.
+         * @returns {void}
+         */
         navigate(key) {
             this.$emit('navigate', key);
         }
-    },
-    created() {
-        this.height = window.innerHeight;
     }
 };
 </script>

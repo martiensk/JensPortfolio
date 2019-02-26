@@ -1,10 +1,10 @@
 import Vue from 'vue';
-import Main from './_components/main';
+import Loader from './_components/loader';
 
 export default (context) => {
     const app = new Vue({
         render: (h) => {
-            return h(Main);
+            return h(Loader);
         }
     });
     return app;

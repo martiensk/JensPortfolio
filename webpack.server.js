@@ -13,7 +13,7 @@ const fin = Object.assign(base, {
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'commonjs2'
     },
-    externals: nodeExternals({whitelist: '/.css$/'})
+    externals: nodeExternals({ whitelist: ['/.css$/'] })
 });
 
 module.exports = fin;

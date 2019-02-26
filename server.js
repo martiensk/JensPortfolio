@@ -9,12 +9,16 @@ const serverBundle = path.join(__dirname, 'dist', 'vue-ssr-server-bundle.json');
 
 const getDirs = p => fs.readdirSync(p).filter(f => fs.statSync(path.join(p, f)).isDirectory())
 const photos = {};
+const blurbs = {};
 
 for (const dir of getDirs(path.join(__dirname, 'photos'))) {
     photos[dir] = fs.readdirSync(path.join(__dirname, 'photos', dir));
+    blurbs[dir] = fs.readFileSync(path.join(__dirname, 'photos', dir, 'blurb.txt'), 'utf8');
 }
 
-console.log(photos);
+for (const i in photos) {
+    photos[i] = photos[i].filter((e) => e !== 'blurb.txt');
+}
 
 const renderer = createBundleRenderer(serverBundle, {
     runInNewContext: true,
@@ -25,7 +29,7 @@ app.use(express.static(path.join(__dirname, '/dist')));
 app.use(express.static(path.join(__dirname, '/photos')));
 
 app.use(require('connect-inject')({
-    snippet: `<script>const photos = ${JSON.stringify(photos)};</script>`,
+    snippet: `<script>var photos = ${JSON.stringify(photos)};var blurbs = ${JSON.stringify(blurbs)} </script>`,
     ignore: ['.js', '.svg']
 }));
 

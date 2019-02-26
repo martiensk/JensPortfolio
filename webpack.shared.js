@@ -8,6 +8,7 @@ const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
 /**
  * @param {string} env The node environment as a string.
@@ -184,9 +185,11 @@ const getPlugins = (env, ssr) => {
                 collapseBooleanAttributes: true,
                 collapseInlineTagWhitespace: true,
                 collapseWhitespace: true
-            }
+            },
+            environment: env
         }),
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new VuetifyLoaderPlugin()
     ];
 
     if (env === 'development') {
