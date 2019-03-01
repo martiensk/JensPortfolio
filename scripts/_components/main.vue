@@ -27,9 +27,7 @@
             <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat dark>Blog</v-btn>
         </v-toolbar>
         <v-content class="ma-0 pa-0">
-            <v-container ma-0 pa-0 fluid>
-                <router-view :photos="photos" :photo-set="projectPhotos" @navigate="navigate"/>
-            </v-container>
+            <router-view :photos="photos" :photo-set="projectPhotos" :blurb="blurb" :project="selectedProject" @navigate="navigate"/>
         </v-content>
         <v-footer class="justify-center" absolute dark app>
             © {{ year }} Jennie Kropff Photography. All rights reserved.
@@ -37,8 +35,8 @@
     </v-app>
 </template>
 <script>
-/* global photos */
-import { VApp, VToolbar, VToolbarTitle, VContent, VContainer, VFooter, VSubheader, VCard, VSpacer, VBtn, VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib';
+/* global photos, blurbs */
+import { VApp, VToolbar, VToolbarTitle, VContent, VFooter, VSubheader, VCard, VSpacer, VBtn, VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib';
 
 export default {
     name: 'Main',
@@ -47,7 +45,6 @@ export default {
         VToolbar,
         VToolbarTitle,
         VContent,
-        VContainer,
         VFooter,
         VSubheader,
         VCard,
@@ -62,11 +59,14 @@ export default {
         return {
             photos: {},
             projectPhotos: null,
+            blurb: '',
+            selectedProject: '',
             year: new Date().getFullYear()
         };
     },
-    mounted() {
+    created() {
         this.photos = photos;
+        typeof this.$route.params.key !== 'undefined' && this.loadProjectData(this.$route.params.key);
     },
     methods: {
 
@@ -76,8 +76,19 @@ export default {
          * @returns {void}
          */
         navigate(key) {
+            this.loadProjectData(key);
+            this.$router.push({ name: 'project', params: { key } });
+        },
+
+        /**
+         * Loads data related to a specific project.
+         * @param {string} key The project to load.
+         * @returns {void}
+         */
+        loadProjectData(key) {
             this.projectPhotos = photos[key];
-            this.$router.push({name: 'project', params: { key }});
+            this.blurb = blurbs[key];
+            this.selectedProject = key;
         }
     }
 };

@@ -1,19 +1,21 @@
 <template>
-    <v-carousel hide-delimiters :height="height">
-        <v-carousel-item v-for="(photo, key, index) in photos" :key="index" :src="`/${key}/cover.jpg`">
-            <v-card class="pa-10 font-weight-light" light @click="navigate(key)">
-                projects / <span>{{ key }}</span>
-            </v-card>
-        </v-carousel-item>
-    </v-carousel>
+    <v-container ma-0 pa-0 fluid>
+        <v-carousel hide-delimiters :height="height">
+            <v-carousel-item v-for="(photo, key, index) in photos" :key="index" :src="`/${key}/cover.jpg`">
+                <v-card class="pa-10 font-weight-light" light @click="navigate(key)">
+                    projects / <span>{{ key }}</span>
+                </v-card>
+            </v-carousel-item>
+        </v-carousel>
+    </v-container>
 </template>
 
 <script>
-import { VCarousel, VCarouselItem, VCard } from 'vuetify/lib';
+import { VContainer, VCarousel, VCarouselItem, VCard } from 'vuetify/lib';
 
 export default {
     name: 'Home',
-    components: { VCarousel, VCarouselItem, VCard },
+    components: { VContainer, VCarousel, VCarouselItem, VCard },
     props: {
         photos: {
             type: Object,
