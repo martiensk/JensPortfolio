@@ -6,7 +6,10 @@ import Routes from './router';
 import { Ripple } from 'vuetify/lib/directives';
 import '../styles/main.scss';
 import 'vuetify/src/stylus/app.styl';
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/dist/css/swiper.css';
 
+Vue.use(VueAwesomeSwiper);
 Vue.use(VueRouter);
 const router = new VueRouter({ routes: Routes });
 

@@ -1,11 +1,11 @@
 <template>
     <v-app>
         <v-toolbar app height="120px" flat color="transparent" :fixed="true">
-            <v-card elevation="0" flat color="transparent" class="white--text menu-text" :to="'/'">
+            <v-card elevation="0" flat color="transparent" :class="[isHome ? 'white--text' : '', 'menu-text']" :to="'/'">
                 <v-toolbar-title class="display-1 text-uppercase font-weight-bold">
                     Jennie Kropff
                 </v-toolbar-title>
-                <v-subheader class="body-2 text-uppercase d-block pa-0 white--text menu-text">
+                <v-subheader :class="['body-2', 'text-uppercase', 'd-block', 'pa-0', isHome ? 'white--text' : '', 'menu-text']">
                     Photography
                 </v-subheader>
             </v-card>
@@ -64,6 +64,11 @@ export default {
             year: new Date().getFullYear()
         };
     },
+    computed: {
+        isHome() {
+            return this.$route.path === '/';
+        }
+    },
     created() {
         this.photos = photos;
         typeof this.$route.params.key !== 'undefined' && this.loadProjectData(this.$route.params.key);
@@ -97,6 +102,9 @@ export default {
 <style lang="scss">
 .menu-text {
     letter-spacing: 4px;
+}
+
+.white--text.menu-text {
     text-shadow: 1px 1px 2px #000;
 }
 

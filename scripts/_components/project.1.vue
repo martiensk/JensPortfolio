@@ -5,8 +5,6 @@
                 <img :src="`/${project}/${photo}`">
             </swiper-slide>
             <div slot="pagination" class="swiper-pagination"/>
-            <div slot="button-prev" class="swiper-button-prev"/>
-            <div slot="button-next" class="swiper-button-next"/>
         </swiper>
         <v-card>
             <v-card-text>{{ blurb }}</v-card-text>
@@ -39,15 +37,19 @@ export default {
     data() {
         return {
             swiperOptions: {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
                 slidesPerView: 'auto',
-                spaceBetween: 30,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true
+                coverflowEffect: {
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true
                 },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev'
+                pagination: {
+                    el: '.swiper-pagination'
                 }
             }
         };

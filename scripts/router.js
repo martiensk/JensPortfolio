@@ -7,6 +7,7 @@
 import Parallax from './_components/parallax.vue';
 import Carousel from './_components/carousel.vue';
 import Project from './_components/project.vue';
+import Project2 from './_components/project.1.vue';
 
 export default [
     {
@@ -18,7 +19,8 @@ export default [
     {
         path: '/project/:key',
         name: 'project',
-        component: Project,
+        // component: Project,
+        component: Project2,
         props: true
     },
     {
