@@ -1,12 +1,12 @@
 <template>
-    <v-container ma-0 pa-0 fluid class="flexi-container">
-        <swiper :options="swiperOptions" class="slider">
+    <v-container ma-0 pa-0 fluid class="flexi-container" fill-height>
+        <swiper :options="swiperOptions" class="slider" :key="project">
             <swiper-slide v-for="(photo, key) in photoSet" :key="key" class="slider-item">
                 <img :src="`/${project}/${photo}`">
             </swiper-slide>
             <div slot="pagination" class="swiper-pagination"/>
         </swiper>
-        <v-card>
+        <v-card elevation="0" flat>
             <v-card-text>{{ blurb }}</v-card-text>
         </v-card>
     </v-container>
@@ -72,7 +72,7 @@ export default {
 }
 
 .slider-item {
-    margin: 10px;
+    margin: 0;
     width: auto;
 }
 

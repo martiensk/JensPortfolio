@@ -11,7 +11,7 @@
             </v-card>
             <v-spacer/>
             <v-menu offset-y :nudge-bottom="5" :min-width="160" :nudge-left="25" :open-on-hover="true">
-                <v-btn slot="activator" class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat dark>
+                <v-btn slot="activator" class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat :dark="isHome">
                     + Projects
                 </v-btn>
                 <v-list class="pa-0">
@@ -23,10 +23,10 @@
                     </v-list-tile>
                 </v-list>
             </v-menu>
-            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat dark>About</v-btn>
-            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat dark>Blog</v-btn>
+            <v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat :dark="isHome" to="/about">About</v-btn>
+            <!--v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat :dark="isHome">Blog</v-btn-->
         </v-toolbar>
-        <v-content class="ma-0 pa-0">
+        <v-content :class="!isAbout ? 'ma-0 pa-0' : ''">
             <router-view :photos="photos" :photo-set="projectPhotos" :blurb="blurb" :project="selectedProject" @navigate="navigate"/>
         </v-content>
         <v-footer class="justify-center" absolute dark app>
@@ -65,8 +65,21 @@ export default {
         };
     },
     computed: {
+
+        /**
+         * Determines if the route is currently at the home page.
+         * @returns {void}
+         */
         isHome() {
             return this.$route.path === '/';
+        },
+
+        /**
+         * Determines if the route is currently at the about page.
+         * @returns {void}
+         */
+        isAbout() {
+            return this.$route.path === '/about';
         }
     },
     created() {
@@ -157,9 +170,5 @@ export default {
             background-color: transparent;
         }
     }
-}
-
-.container {
-    min-height: 100%;
 }
 </style>

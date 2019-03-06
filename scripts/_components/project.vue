@@ -1,5 +1,5 @@
 <template>
-    <v-container ma-0 pa-0 fluid class="flexi-container">
+    <v-container ma-0 pa-0 fluid class="flexi-container" fill-height>
         <swiper :options="swiperOptions" class="slider">
             <swiper-slide v-for="(photo, key) in photoSet" :key="key" class="slider-item">
                 <img :src="`/${project}/${photo}`">
@@ -8,7 +8,7 @@
             <div slot="button-prev" class="swiper-button-prev"/>
             <div slot="button-next" class="swiper-button-next"/>
         </swiper>
-        <v-card>
+        <v-card elevation="0" flat>
             <v-card-text>{{ blurb }}</v-card-text>
         </v-card>
     </v-container>
