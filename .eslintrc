@@ -70,7 +70,7 @@
         "semi": ["error", "always"],
         "semi-style": ["error", "last"],
         "switch-colon-spacing": ["error"],
-        "arrow-body-style": ["error", "always"],
+        "arrow-body-style": ["warn", "as-needed"],
         "arrow-parens": "error",
         "no-duplicate-imports": "error",
         "no-obj-calls": "error",
@@ -146,9 +146,9 @@
         ],
         "vue/html-indent": ["warn", 4],
         "vue/max-attributes-per-line": ["warn", {
-            "singleline": 5,
+            "singleline": 7,
             "multiline": {
-              "max": 5,
+              "max": 7,
               "allowFirstLine": true
             }
           }]
