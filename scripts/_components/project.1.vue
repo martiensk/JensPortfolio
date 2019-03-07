@@ -1,10 +1,12 @@
 <template>
     <v-container ma-0 pa-0 fluid class="flexi-container" fill-height>
-        <swiper :options="swiperOptions" class="slider" :key="project">
+        <swiper :options="swiperOptions" class="slider" ref="slider">
             <swiper-slide v-for="(photo, key) in photoSet" :key="key" class="slider-item">
                 <img :src="`/${project}/${photo}`">
             </swiper-slide>
             <div slot="pagination" class="swiper-pagination"/>
+            <div slot="button-prev" class="swiper-button-prev"/>
+            <div slot="button-next" class="swiper-button-next"/>
         </swiper>
         <v-card elevation="0" flat>
             <v-card-text>{{ blurb }}</v-card-text>
@@ -68,7 +70,7 @@ export default {
 .slider {
     display: flex;
     padding: 100px 0;
-    max-width: 100%;
+    width: 100%;
 }
 
 .slider-item {

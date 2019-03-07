@@ -1,6 +1,6 @@
 <template>
     <v-container ma-0 pa-0 fluid class="flexi-container" fill-height>
-        <swiper :options="swiperOptions" class="slider">
+        <swiper :key="project" :options="swiperOptions" class="slider">
             <swiper-slide v-for="(photo, key) in photoSet" :key="key" class="slider-item">
                 <img :src="`/${project}/${photo}`">
             </swiper-slide>
@@ -41,6 +41,7 @@ export default {
             swiperOptions: {
                 slidesPerView: 'auto',
                 spaceBetween: 30,
+                centeredSlides: true,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true

@@ -10,9 +10,9 @@
                     </v-card>
                 </v-flex>
             </v-layout>
-            <v-layout justify-center align-start fill-height>
-                <v-flex xs3 fill-height>
-                    <v-card class="mr-2 mb-auto" color="yellow lighten-3" height="100%">
+            <v-layout justify-center align-center fill-height>
+                <v-flex xs3>
+                    <v-card class="mr-2 mb-auto" color="transparent" flat>
                         <v-card-text>
                             <p>
                                 I am a new photographer to the scene looking to hone my skill in photography.
@@ -29,14 +29,29 @@
                             <p>
                                 I look forward to being able to help you show the world your moreish food and drinks.
                             </p>
+                            <p>
+                                <strong>
+                                    Photographer
+                                </strong>
+                            </p>
+                            <p>
+                                <i>
+                                    Jen. K
+                                </i>
+                            </p>
+                            <p>
+                                <i>
+                                    <a href="mailto:jenzi.kropff@gmail.com">
+                                        jenzi.kropff@gmail.com
+                                    </a>
+                                </i>
+                            </p>
                         </v-card-text>
                     </v-card>
                 </v-flex>
-                <v-flex xs3 fill-height>
-                    <v-card class="d-flex ml-2" color="red lighten-3" height="100%">
-                        <v-img>
-                            #5: (2r x 2c)
-                        </v-img>
+                <v-flex xs3>
+                    <v-card class="d-flex ml-2" color="red lighten-3" height="400px" width="400px">
+                        <v-img :src="'/images/about.jpg'"/>
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -46,6 +61,7 @@
 
 <script>
 import { VContainer, VLayout, VFlex, VCard, VCardText, VCardTitle, VImg } from 'vuetify/lib';
+import '../../images/about.jpg';
 
 export default {
     name: 'About',
@@ -60,3 +76,9 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+a {
+    color: #000;
+    text-decoration: none;
+}
+</style>

@@ -27,7 +27,7 @@
             <!--v-btn class="pr-0 ma-1 menu-link" :right="true" :ripple="false" :small="true" flat :dark="isHome">Blog</v-btn-->
         </v-toolbar>
         <v-content :class="!isAbout ? 'ma-0 pa-0' : ''">
-            <router-view :photos="photos" :photo-set="projectPhotos" :blurb="blurb" :project="selectedProject" @navigate="navigate"/>
+            <router-view :key="$route.fullPath" :photos="photos" :photo-set="projectPhotos" :blurb="blurb" :project="selectedProject" @navigate="navigate"/>
         </v-content>
         <v-footer class="justify-center" absolute dark app>
             © {{ year }} Jennie Kropff Photography. All rights reserved.
