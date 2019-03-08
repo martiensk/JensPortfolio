@@ -58,16 +58,16 @@ export default {
 
 <style lang="scss" scoped>
 .flexi-container {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
 }
 
 .slider {
     display: flex;
-    padding: 100px 0;
     max-width: 100%;
+    padding: 100px 0;
 }
 
 .slider-item {
